@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://use.fontawesome.com/d1341f9b7a.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.css">
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Reema Alakeel</title>
+
+  <script type="text/javascript">
+    function validateName() {
+
+      var name = document.getElementById('contact-name').value;
+
+      if(name.length == 0) {
+
+        producePrompt('Name is required', 'name-error' , 'red')
+        return false;
+
+    }
+
+    if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)) {
+
+        producePrompt('First and last name, please.','name-error', 'red');
+        return false;
+
+    }
+
+    producePrompt('Valid', 'name-error', 'green');
+    return true;
+
+}
+
+function validatePhone() {
+
+  var phone = document.getElementById('contact-phone').value;
+
+  if(phone.length == 0) {
+      producePrompt('Phone number is required.', 'phone-error', 'red');
+      return false;
+  }
+
+  if(phone.length != 10) {
+      producePrompt('Include area code.', 'phone-error', 'red');
+      return false;
+  }
+
+  if(!phone.match(/^[0-9]{10}$/)) {
+      producePrompt('Only digits, please.' ,'phone-error', 'red');
+      return false;
+  }
+
+  producePrompt('Valid', 'phone-error', 'green');
+  return true;
+
+}
+
+function validateEmail () {
+
+  var email = document.getElementById('contact-email').value;
+
+  if(email.length == 0) {
+
+    producePrompt('Email Invalid','email-error', 'red');
+    return false;
+
+}
+
+if(!email.match(/^[A-Za-z\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+
+    producePrompt('Email Invalid', 'email-error', 'red');
+    return false;
+
+}
+
+producePrompt('Valid', 'email-error', 'green');
+return true;
+
+}
+
+function validateMessage() {
+  var message = document.getElementById('contact-message').value;
+  var required = 20;
+  var left = required - message.length;
+
+  if (left > 0) {
+    producePrompt(left + ' more characters required','message-error','red');
+    return false;
+}
+
+producePrompt('Valid', 'message-error', 'green');
+return true;
+
+}
+
+function validateForm() {
+  if (!validateName() || !validatePhone() || !validateEmail() || !validateMessage()) {
+    jsShow('submit-error');
+    producePrompt('Please fix errors to submit.', 'submit-error', 'red');
+    setTimeout(function(){jsHide('submit-error');}, 2000);
+    return false;
+}
+else {
+alert("message sent!");
+}
+}
+
+
+function jsShow(id) {
+  document.getElementById(id).style.display = 'block';
+}
+
+function jsHide(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+
+function producePrompt(message, promptLocation, color) {
+
+  document.getElementById(promptLocation).innerHTML = message;
+  document.getElementById(promptLocation).style.color = color;
+
+}
+
+</script>
+  </head>
+  <body>
+    <header>
+      <img class="logo" src="logo.png" alt="logo">
+      <nav>
+        <ul class="nav__links">
+           <li><a href="#home">Home</a></li>
+           <li><a href="#about">About</a></li>
+           <li><a href="#contact">Contact</a></li>
+    </header>
+
+<div class="box" id="home">
+
+  <img src="profile.png" alt="" class="box-img">
+  <h1>Reema Alakeel</h1>
+<h5>
+Information Systems Student</h5>
+<p>
+An IS student @ KSU. Hardworking and passionate analytical thinker, Always ready for an opportunity to gain new skills and hone old ones.</p>
+<ul>
+ <li><a href="https://linkedin.com/in/reema-alakeel" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+<li><a href="https://mobile.twitter.com/ReemaAlakeel" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"id="about"></i></a></li>
+</ul>
+
+</div>
+
+<div class="box">
+  
+<h1>Training Courses</h1>
+<p>
+-Programming Basics with Python Bootcamp<br>
+Code for Girls | 2019 </p>
+
+<p>-Agile Principles and Scrum Process<br>
+Code for Girls | 2021</p>
+
+<p>-Web Developement with HTML,CSS & JS<br>
+Wakeb Data | 2021
+</p>
+
+</div>
+
+<div class="box">
+
+  <div class="contact-section" id="contact">
+   <h1>Contact me!</h1>
+
+    <form class="contact-form" action="index.html" method="post">
+
+     <label for="contact-name">Name:</label><br>
+     <input type="text" class="contact-form-text" id="contact-name"placeholder="Your name"onkeyup='validateName()'>
+        <span class='error-message' id='name-error'></span>
+
+     <label for="contact-email">Email:</label><br>
+      <input type="email" class="contact-form-text"id="contact-email" placeholder="Your email"onkeyup='validateEmail()'>
+        <span class='error-message' id='email-error'></span>
+          
+     <label for="contact-phone">Phone-number:</label><br>
+     <input type="tel" class="contact-form-text" id="contact-phone"placeholder="Your phone number"onkeyup='validatePhone()'>
+        <span class='error-message' id='phone-error'></span>
+
+ <label for="contact-message">Message:</label><br>
+      <textarea class="contact-form-text" id="contact-message"placeholder="Your message"onkeyup='validateMessage()'></textarea>
+        <span class='error-message' id='message-error'></span>
+    </textarea>
+
+   <button onclick='return validateForm()' class="btn btn-default">send</button>
+   <span class='error-message' id='submit-error'></span>
+
+    </form><br> 
+
+</div>
+
+</div>
+
+<footer>
+    <p>
+        Created with <i class="fa fa-heart"></i> by Reema
+    </p>
+</footer>
+</body>
+
+</html>
